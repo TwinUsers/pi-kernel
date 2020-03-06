@@ -9,16 +9,12 @@ This project contains a weekly autobuild of the default branch (currently, `rpi-
 
 Builds are performed with the standard `bcm2711_defconfig`, with the only change being that the first 12 hex digits of the tip commit SHA1 hash plus `-p4` are appended to `CONFIG_LOCALVERSION` (with a separating hyphen) before building.
 
-> Please note that as the purpose of this project is to provide a 'vanilla' build of the upstream `bcm2711_defconfig`, PRs requesting config changes will be rejected. Instead, please see the sister [`bcm2711-kernel-bis`](https://github.com/sakaki-/bcm2711-kernel-bis) project, which has a weekly autobuild (with versions mirroring this one, using a tweaked `bcm2711_defconfig`), and where such PRs *will* be accepted for review.
-
 A new build tarball is automatically created and uploaded as a release asset each week (unless the tip of the default branch is unchanged from the prior week, or an error occurs during the build process).
 
 > The default branch is used, as that is generally given most attention by RPF upstream.
 
-As an (historical) example, on 24 July 2019, the default branch was `rpi-4.19.y` and the latest commit was `689fc28a5af07cedb88760b2f35b1eb6f6a7e112` (the short form of which is `689fc28a5af0`). The created release was [4.19.59.20190724](https://github.com/sakaki-/bcm2711-kernel/releases/tag/4.19.59.20190724), within which the kernel tarball was `bcm2711-kernel-4.19.59.20190724.tar.xz`, and the corresponding kernel release name was `4.19.59-v8-689fc28a5af0-p4+`.
-
 Each kernel release tarball currently provides the following files:
-* `/boot/kernel8-p4.img` (this is the bootable 64-bit kernel);
+* `/boot/kernel8-64bit.img` (this is the bootable 64-bit kernel);
 * `/boot/COPYING.linux` (the kernel's license file);
 * `/boot/config-p4` (the configuration used to build the kernel);
 * `/boot/Module-p4.symvers.xz` (a table mapping exported symbols to provider, compressed);
@@ -30,15 +26,11 @@ Each kernel release tarball currently provides the following files:
 
 > The `/boot/Module-p4.symvers.xz` file is only included in more recent builds. The `/boot/System-p4.map.xz` is supplied in compressed form only in recent builds.
 
-The current kernel tarball may be downloaded from the link below (or via `wget`, or via the corresponding `bcm2711-kernel-bin` ebuild, per the [instructions following](#installation)):
+The current kernel tarball may be downloaded from the link below (or via `wget`):
 
 Variant | Version | Most Recent Image
 :--- | ---: | ---:
-Kernel, dtbs, modules and GIC stub | 4.19.106.20200304 | [bcm2711-kernel-4.19.106.20200304.tar.xz](https://github.com/sakaki-/bcm2711-kernel/releases/download/4.19.106.20200304/bcm2711-kernel-4.19.106.20200304.tar.xz)
-
-The corresponding kernel configuration (derived via `make bcm2711_defconfig`) may be viewed [here](https://github.com/sakaki-/bcm2711-kernel/blob/master/config).
-
-> A list of all releases may be seen [here](https://github.com/sakaki-/bcm2711-kernel/releases).
+Kernel, dtbs, modules and GIC stub | 4.19.102 | [kernel-latest.tar.xz](https://github.com/TwinUsers/pi-kernel/releases/download/4.19.x-64bit/kernel-latest.tar.xz)
 
 ## <a name="installation"></a>Installation
 
@@ -63,7 +55,7 @@ linuxpc ~ # mount -v /dev/mmcblk0p1 /mnt/piroot/boot
 Next, fetch the the current kernel tarball, and untar it into the mounted image. Issue:
 
 ```console
-linuxpc ~ # wget -cO- https://github.com/sakaki-/bcm2711-kernel/releases/download/4.19.106.20200304/bcm2711-kernel-4.19.106.20200304.tar.xz | tar -xJf- -C /mnt/piroot/
+linuxpc ~ # wget -cO- https://github.com/TwinUsers/pi-kernel/releases/download/4.19.x-64bit/kernel-latest.tar.xz | tar -xJf- -C /mnt/piroot/
 ```
 
 Then, edit the image's `/boot/config.txt`:
@@ -96,7 +88,3 @@ linuxpc ~ # umount -v /mnt/piroot/{boot,}
 ```
 
 If you now remove the microSD card, insert it into a RPi4, and power on, you should find it starts up under the 64-bit kernel! 
-
-> Users of my [genpi64 overlay](https://github.com/sakaki-/genpi64-overlay) (it is pre-installed on the [gentoo-on-rpi-64bit](https://github.com/sakaki-/gentoo-on-rpi-64bit) image, for example), can simply `emerge` the `bcm2711-kernel-bin` package to deploy (a new ebuild is automatically created to mirror each release here).
-
-> NB: these prebuilt kernels and ebuilds are provided as a convenience only. Use at your own risk! **Given that the releases in this project are created automatically, there is no guarantee that any given kernel will boot correctly.** A 64-bit kernel is necessary, but not sufficient, to boot the RPi4 in 64-bit mode; you also need the supporting firmware, configuration files, and userland software.
