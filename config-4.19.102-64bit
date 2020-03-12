@@ -1,13 +1,13 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 4.19.101-64bit Kernel Configuration
+# Linux/arm64 4.19.102-64bit Kernel Configuration
 #
 
 #
-# Compiler: aarch64-linux-gnu-gcc (Ubuntu/Linaro 7.4.0-1ubuntu1~18.04.1) 7.4.0
+# Compiler: aarch64-linux-gnu-gcc (Ubuntu/Linaro 7.5.0-3ubuntu1~18.04) 7.5.0
 #
 CONFIG_CC_IS_GCC=y
-CONFIG_GCC_VERSION=70400
+CONFIG_GCC_VERSION=70500
 CONFIG_CLANG_VERSION=0
 CONFIG_CC_HAS_ASM_GOTO=y
 CONFIG_IRQ_WORK=y
@@ -1466,13 +1466,13 @@ CONFIG_CAN_MCP251X=m
 #
 # CAN USB interfaces
 #
-# CONFIG_CAN_8DEV_USB is not set
+CONFIG_CAN_8DEV_USB=m
 # CONFIG_CAN_EMS_USB is not set
 # CONFIG_CAN_ESD_USB2 is not set
 CONFIG_CAN_GS_USB=m
-# CONFIG_CAN_KVASER_USB is not set
+CONFIG_CAN_KVASER_USB=m
 # CONFIG_CAN_MCBA_USB is not set
-# CONFIG_CAN_PEAK_USB is not set
+CONFIG_CAN_PEAK_USB=m
 # CONFIG_CAN_UCAN is not set
 # CONFIG_CAN_DEBUG_DEVICES is not set
 CONFIG_BT=m
@@ -4707,6 +4707,7 @@ CONFIG_SND_SOC_DMIC=m
 # CONFIG_SND_SOC_GTM601 is not set
 CONFIG_SND_SOC_ICS43432=m
 # CONFIG_SND_SOC_INNO_RK3036 is not set
+# CONFIG_SND_SOC_MA120X0P is not set
 # CONFIG_SND_SOC_MAX98504 is not set
 # CONFIG_SND_SOC_MAX9867 is not set
 # CONFIG_SND_SOC_MAX98927 is not set
